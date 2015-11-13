@@ -23,7 +23,14 @@ class c_agregar_parque extends super_controller {
 		$this->orm->connect();
 		$this->orm->insert_data("normal", $parque);
 		$this->orm->close();
-
+		settype($data,'object');
+		$data->fecha=date("y-m-d");
+		$data->calificacion=0;
+		$data->parque=$parque->get("codigo");
+		$calificacion= new calificacion($data);
+		$this->orm->connect();
+		$this->orm->insert_data("normal", $calificacion);
+		$this->orm->close();
 		$this->type_warning="sucess";
 		$this->msg_warning="parque agregado correctamente";
 
