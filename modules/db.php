@@ -103,6 +103,19 @@ class db
 					break;
 			}
 			break;
+			case "calificacion":
+			switch($options['lvl2'])
+			{
+				case "normal":
+					$fecha=mysqli_real_escape_string($this->cn,$object->get('fecha'));
+					$calificacion=mysqli_real_escape_string($this->cn,$object->get('calificacion'));
+					$parque=mysqli_real_escape_string($this->cn, $object->get('parque'));
+					
+					$this->do_operation("INSERT INTO `calificacion` (`fecha`, `calificacion`, `parque`) VALUES
+					('$fecha', '$calificacion', '$parque')");
+					break;
+			}
+			break;
 			
 			default: break;
 		}
@@ -117,13 +130,28 @@ class db
 				switch($options['lvl2']){
 	
 				case "normal":
-				echo "Sera aquiseñor?";
+				
 					$idv=mysqli_real_escape_string($this->cn,$object->auxiliars['id_aux']);
 					$id=mysqli_real_escape_string($this->cn,$object->get('id'));
 					$name=mysqli_real_escape_string($this->cn,$object->get('name'));
 					$salary=mysqli_real_escape_string($this->cn, $object->get('salary'));
 					$boss=mysqli_real_escape_string($this->cn,$object->get('boss'));
 					$this->do_operation("UPDATE clerk SET id='$id', name='$name', salary='$salary', boss='$boss' WHERE id='$idv';");
+					break;
+				}
+
+			break;
+			case "calificacion":
+				switch($options['lvl2']){
+	
+				case "normal":
+				
+					
+					$parque=mysqli_real_escape_string($this->cn,$object->get('parque'));
+					$calificacion=mysqli_real_escape_string($this->cn,$object->get('calificacion'));
+					$fecha=mysqli_real_escape_string($this->cn, $object->get('fecha'));
+					
+					$this->do_operation("UPDATE calificacion SET calificacion='$calificacion', fecha='$fecha' WHERE parque='$parque';");
 					break;
 				}
 
@@ -163,6 +191,30 @@ class db
 				case "all": 
 					//
 					break;
+			}
+			break;
+			case "parque":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					$info=$this->get_data("SELECT * FROM parque;"); 
+					break;
+				
+				case "by_nivel":
+				$id=mysqli_real_escape_string($this->cn,$data['nivel']);
+				
+				$info=$this->get_data("SELECT * FROM parque WHERE nivel='$id';"); 
+				break;
+			}
+			break;
+			case "calificacion":
+			switch($option['lvl2'])
+			{
+				case "all": 
+					$info=$this->get_data("SELECT * FROM calificacion;"); 
+					break;
+				
+				
 			}
 			break;
 			case "clerk":
